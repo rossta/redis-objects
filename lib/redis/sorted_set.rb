@@ -267,12 +267,6 @@ class Redis
     alias_method :^, :difference
     alias_method :-, :difference
 
-    # Calculate the diff and store it in Redis as +name+. Returns the number
-    # of elements in the stored union. Redis: SDIFFSTORE
-    def diffstore(name, *sets)
-      redis.zdiffstore(name, key, *keys_from_objects(sets))
-    end
-
     # Returns true if the set has no members. Redis: SCARD == 0
     def empty?
       length == 0
@@ -319,6 +313,7 @@ class Redis
     end
 
     private
+
     def key_from_object(set)
       set.is_a?(Redis::SortedSet) ? set.key : set
     end

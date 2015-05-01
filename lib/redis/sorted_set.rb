@@ -195,24 +195,6 @@ class Redis
     alias_method :decr, :decrement
     alias_method :decrby, :decrement
 
-    # Return the intersection with another set.  Can pass it either another set
-    # object or set name.  Also available as & which is a bit cleaner:
-    #
-    #    members_in_both = set1 & set2
-    #
-    # If you want to specify multiple sets, you must use +intersection+:
-    #
-    #    members_in_all = set1.intersection(set2, set3, set4)
-    #    members_in_all = set1.inter(set2, set3, set4)  # alias
-    #
-    # Redis: SINTER
-    def intersection(*sets)
-      redis.zinter(key, *keys_from_objects(sets)).map{|v| unmarshal(v) }
-    end
-    alias_method :intersect, :intersection
-    alias_method :inter, :intersection
-    alias_method :&, :intersection
-
     # Calculate the intersection and store it in Redis as +name+. Returns the number
     # of elements in the stored intersection. Redis: SUNIONSTORE
     def interstore(name, *sets)
